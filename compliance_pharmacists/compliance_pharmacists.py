@@ -71,14 +71,15 @@ def run_it():
     usage.sort_values(['lookups in date range', 'pharmacy sched 2'], ascending=[True, False], inplace=True)
     return(final_sheet, usage)
 
-# command line
-if len(sys.argv) != 2 or (sys.argv[1] != 'reg' and sys.argv[1] != 'use'):
-    print('please follow one of the below formats')
-    print('reg: python3.10 compliance_pharmacists.py reg')
-    print('use: python3.10 compliance_pharmacists.py use')
-elif sys.argv[1] == 'reg':
-    run_it()[0].to_clipboard(index=False)
-    print('copied reg to clipoard')
-else:
-    run_it()[1].to_clipboard(index=False)
-    print('copied use to clipboard')
+if __name__ == "__main__":
+    # command line
+    if len(sys.argv) != 2 or (sys.argv[1] != 'reg' and sys.argv[1] != 'use'):
+        print('please follow one of the below formats')
+        print('reg: python3.10 compliance_pharmacists.py reg')
+        print('use: python3.10 compliance_pharmacists.py use')
+    elif sys.argv[1] == 'reg':
+        run_it()[0].to_clipboard(index=False)
+        print('copied reg to clipoard')
+    else:
+        run_it()[1].to_clipboard(index=False)
+        print('copied use to clipboard')
