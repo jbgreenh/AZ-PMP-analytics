@@ -1,4 +1,3 @@
-from operator import index
 import pandas as pd
 
 def highlight_cells(val):

@@ -1,4 +1,3 @@
-from operator import index
 import pandas as pd
 
 ddr = pd.read_csv('delinquent_dispenser_request.csv', index_col=None)
