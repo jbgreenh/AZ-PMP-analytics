@@ -31,8 +31,11 @@ def check_reg(input_fn, output_fn, dea_col_name):
     writer.save()
     print(f'{output_fn} saved')
 
-if __name__ == "__main__":
+def main():
     in_fn = 'tests/test.xlsx'
     out_fn = '~/Downloads/testq.xlsx' # ~/Downloads/
     dea_col = 'DEA#'
     check_reg(input_fn=in_fn, output_fn=out_fn, dea_col_name=dea_col)
+
+if __name__ == "__main__":
+    main()
