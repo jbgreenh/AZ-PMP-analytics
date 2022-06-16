@@ -68,7 +68,7 @@ def run_it():
     usage.sort_values(['lookups in date range', 'pharmacy sched 2'], ascending=[True, False], inplace=True)
     return(final_sheet, usage)
 
-if __name__ == "__main__":
+def main():
     # command line
     if len(sys.argv) != 2 or (sys.argv[1] != 'reg' and sys.argv[1] != 'use'):
         print('please follow one of the below formats')
@@ -80,3 +80,6 @@ if __name__ == "__main__":
     else:
         run_it()[1].to_clipboard(index=False)
         print('copied use to clipboard')
+
+if __name__ == "__main__":
+    main()    
