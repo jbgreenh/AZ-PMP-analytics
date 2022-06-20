@@ -12,3 +12,6 @@ checks delinquent pharmacies for status in igov for updating manage pharmacies r
   
 ### reg_checks
 check prescriber lists for registration in awarxe
+
+### signups
+WIP
