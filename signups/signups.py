@@ -92,6 +92,7 @@ def signups(out_fp):
         'county_total':'Number of Controlled Substance (II-IV) Prescribers (last 12 months)2',
         'percent':'Percentage3'}, inplace=True)
 
+    # write to output_fp
     writer = pd.ExcelWriter(out_fp)
 
     totals.to_excel(writer, index=False, sheet_name='Totals', engine='xlsxwriter')
