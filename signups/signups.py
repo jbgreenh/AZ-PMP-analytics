@@ -19,7 +19,8 @@ def set_cols(writer, df, sheet_name):
         col_i = df.columns.get_loc(col)
         writer.sheets[sheet_name].set_column(col_i, col_i, col_len)
 
-def signups(out_fn):
+def signups(out_fp):
+    '''generate an excel file at out_fp with Totals and County Lists tabs'''
     # read necessary tables
     deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
     awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
@@ -91,7 +92,7 @@ def signups(out_fn):
         'county_total':'Number of Controlled Substance (II-IV) Prescribers (last 12 months)2',
         'percent':'Percentage3'}, inplace=True)
 
-    writer = pd.ExcelWriter(out_fn)
+    writer = pd.ExcelWriter(out_fp)
 
     totals.to_excel(writer, index=False, sheet_name='Totals', engine='xlsxwriter')
     az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='xlsxwriter')
@@ -99,11 +100,11 @@ def signups(out_fn):
     set_cols(writer, az_pro_info, 'County Lists')
 
     writer.save()
-    print(f'{out_fn} saved')
+    print(f'{out_fp} saved')
 
 def main():
-    out_fn = '~/Downloads/monthly_signups.xlsx' # ~/Downloads/
-    signups(out_fn)
+    out_fp = '~/Downloads/monthly_signups.xlsx' # ~/Downloads/
+    signups(out_fp)
 
 if __name__ == "__main__":
     main()
