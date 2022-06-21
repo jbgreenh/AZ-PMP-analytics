@@ -14,4 +14,4 @@ checks delinquent pharmacies for status in igov for updating manage pharmacies r
 check prescriber lists for registration in awarxe
 
 ### signups
-WIP
+generate a file with the two data tabs for the monthly signups and county lists report
