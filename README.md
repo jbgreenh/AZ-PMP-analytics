@@ -14,5 +14,5 @@ checks delinquent pharmacies for status in igov for updating manage pharmacies r
 check prescriber lists for registration in awarxe
 
 ### signups
-generate a file with the two data tabs for the monthly signups and county lists report
+generate a file with the two data tabs for the monthly signups and county lists report  
 to update the base DEA file, add a new cs_active.txt to the data folder and run update_deas.py
