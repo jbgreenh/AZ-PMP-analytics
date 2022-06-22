@@ -1,5 +1,5 @@
 import pandas as pd
-from ..utils.sheet_formatting import *
+from utils.sheet_formatting import *
 
 def check_reg(input_fn, output_fn, dea_col_name):
     awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)

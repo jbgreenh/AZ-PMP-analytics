@@ -1,5 +1,5 @@
 import pandas as pd
-from ..utils.sheet_formatting import *
+from utils.sheet_formatting import *
 
 def signups(out_fp):
     '''generate an excel file at out_fp with Totals and County Lists tabs'''
