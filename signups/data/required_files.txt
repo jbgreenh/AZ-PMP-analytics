@@ -1,7 +1,6 @@
 awarxe.xlsx
 az_dispensations.csv
-az_prescriber_deas.csv  # see cs_active.txt
-cs_active.txt # only for updating or creating az_prescriber_deas.csv by using update_deas.py
+az_prescriber_deas.csv  # see deas folder
 exclude_dvm.csv
 lookup_city_county.csv
 lookup_mispelled_city.csv
