@@ -1,5 +1,10 @@
 # AZ-PMP-analytics
   
+### setup
+```
+python3.10 setup.py install
+pip310 install -r requirements.txt
+```
 ### usage
 add the required files from `required_files.txt` to the data folder of the script you wish to run  
 run the python script in the folder
