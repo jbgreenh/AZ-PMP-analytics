@@ -1,7 +1,7 @@
 # AZ-PMP-analytics
   
 ### usage
-add the required files (names must be exact) to the folder of the script you wish to run  
+add the required files (names must be exact) from `required_files.txt` to the data folder of the script you wish to run  
 run the python script in the folder
   
 ### compliance_pharmacists
