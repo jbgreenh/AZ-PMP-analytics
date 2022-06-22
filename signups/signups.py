@@ -1,23 +1,5 @@
 import pandas as pd
-
-def highlight_cells(val):
-    '''highlight cells based on YES or NO'''
-    match val:
-        case 'NO':
-            color = '#ffcccb'   # light red
-        case 'YES':
-            color = '#d2f8d2'   # light green
-        case _:
-            color = 'transparent'
-
-    return 'background-color: {}'.format(color)
-
-def set_cols(writer, df, sheet_name):
-    '''set column width based on max length in column'''    
-    for col in df:
-        col_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
-        col_i = df.columns.get_loc(col)
-        writer.sheets[sheet_name].set_column(col_i, col_i, col_len)
+from ..utils.sheet_formatting import *
 
 def signups(out_fp):
     '''generate an excel file at out_fp with Totals and County Lists tabs'''
@@ -97,8 +79,8 @@ def signups(out_fp):
 
     totals.to_excel(writer, index=False, sheet_name='Totals', engine='xlsxwriter')
     az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='xlsxwriter')
-    set_cols(writer, totals, 'Totals')
-    set_cols(writer, az_pro_info, 'County Lists')
+    set_col_widths(writer, totals, 'Totals')
+    set_col_widths(writer, az_pro_info, 'County Lists')
 
     writer.save()
     print(f'{out_fp} saved')
