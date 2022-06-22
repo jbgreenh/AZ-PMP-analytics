@@ -12,7 +12,7 @@ def highlight_cells(val):
     return 'background-color: {}'.format(color)
 
 def check_reg(input_fn, output_fn, dea_col_name):
-    awarxe = pd.read_excel('awarxe.xlsx', skiprows=1, index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
     input = pd.read_excel(input_fn, index_col=None)
 
     output = input.assign(awarxe=input[dea_col_name].isin(awarxe['DEA Number']))

@@ -2,15 +2,15 @@ import sys
 import pandas as pd
 
 def run_it():
-    awarxe = pd.read_excel('awarxe.xlsx', skiprows=1, index_col=None)
-    inspection_list = pd.read_csv('inspection_list.csv', index_col=None)
-    manage_pharmacies = pd.read_csv('manage_pharmacies.csv', index_col=None)
-    sched_2 = pd.read_csv('pharmacy_sched_2.csv', index_col=None)
-    pharmacies_igov = pd.read_csv('igov_pharmacy.csv', index_col=None)
-    pharmacists_igov = pd.read_csv('igov_pharmacist.csv', index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
+    inspection_list = pd.read_csv('data/inspection_list.csv', index_col=None)
+    manage_pharmacies = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
+    sched_2 = pd.read_csv('data/pharmacy_sched_2.csv', index_col=None)
+    pharmacies_igov = pd.read_csv('data/igov_pharmacy.csv', index_col=None)
+    pharmacists_igov = pd.read_csv('data/igov_pharmacist.csv', index_col=None)
 
-    lookups_mo_1 = pd.read_csv('lookups_mo_1.csv', sep='|', index_col=None)
-    lookups_mo_2 = pd.read_csv('lookups_mo_2.csv', sep='|', index_col=None)
+    lookups_mo_1 = pd.read_csv('data/lookups_mo_1.csv', sep='|', index_col=None)
+    lookups_mo_2 = pd.read_csv('data/lookups_mo_2.csv', sep='|', index_col=None)
     lookups = pd.concat([lookups_mo_1, lookups_mo_2])
     lookups = lookups[['prof_lic', 'totallookups']].groupby('prof_lic', as_index=False).sum()
 
