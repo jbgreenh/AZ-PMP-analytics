@@ -18,9 +18,9 @@ def check_reg(input_fn, output_fn, dea_col_name):
     print(f'{output_fn} saved')
 
 def main():
-    in_fn = 'tests/test.xlsx'
-    out_fn = '~/Downloads/testq.xlsx' # ~/Downloads/
-    dea_col = 'DEA#'
+    in_fn = input('input file name? ex: data/test.xlsx\n')
+    out_fn = input('output file name? ex: ~/Downloads/avpq.xlsx\n')
+    dea_col = input('dea number column name? ex: DEA Number\n')
     check_reg(input_fn=in_fn, output_fn=out_fn, dea_col_name=dea_col)
 
 if __name__ == "__main__":
