@@ -1,0 +1,5 @@
+utils==0.0.0
+pandas
+xlrd >= 1.0.0
+XlsxWriter
+Jinja2
