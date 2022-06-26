@@ -82,6 +82,14 @@ def signups(out_fp):
     set_col_widths(writer, totals, 'Totals')
     set_col_widths(writer, az_pro_info, 'County Lists')
 
+    # get delegate users in casa grande
+    awarxe_delegates = awarxe[awarxe['Role Title'].str.contains('Delegate') | awarxe['Role Title'].str.contains('Technician')]
+    awarxe_delegates = awarxe_delegates[awarxe_delegates['City'].str.upper() == 'CASA GRANDE']
+    awarxe_delegates_presc = awarxe_delegates[awarxe_delegates['Role Title'].str.contains('Presc')]
+    awarxe_delegates_pharm = awarxe_delegates[awarxe_delegates['Role Title'].str.contains('Pharm')]
+    print(f'number of CG prescriber delegates: {len(awarxe_delegates_presc)}')
+    print(f'number of CG pharmacist delegates: {len(awarxe_delegates_pharm)}')
+
     writer.save()
     print(f'{out_fp} saved')
 
@@ -93,7 +101,6 @@ if __name__ == "__main__":
     main()
 
 # TODO
-# cg delegates :|
 # cover page
 # formatting
 
