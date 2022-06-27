@@ -22,4 +22,7 @@ check prescriber lists for registration in awarxe
 generate a file with the two data tabs for the monthly signups and county lists report  
 
 ### deas
-to update the base DEA file, add a new ``cs_active.txt`` to the data folder and run ``az_prescriber_deas.py``
+to update the base DEA file, add a new ``cs_active.txt`` to the data folder and run ``az_prescriber_deas.py``  
+
+### unregistered_prescribers
+WIP  
