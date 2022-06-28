@@ -1,4 +1,4 @@
-az_pharmacy_deas.csv # business activity code A
+az_pharmacy_deas.csv
 clearinghouse.csv
 igov_pharmacy.csv
 
