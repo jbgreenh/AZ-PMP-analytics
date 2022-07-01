@@ -17,7 +17,8 @@ monthly checks for pharmacist registration and pharmacist usage
 checks delinquent pharmacies for status in igov for updating manage pharmacies reporting exceptions  
   
 ### reg_checks
-check prescriber lists for registration in awarxe
+check prescriber lists for registration in awarxe with ``presc_reg_check.py``  
+check pharmacist lists for registration in awarxe with ``pharm_reg_check.py``  
 
 ### signups
 generate a file with the two data tabs for the monthly signups and county lists report  
