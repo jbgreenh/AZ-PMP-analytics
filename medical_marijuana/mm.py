@@ -1,5 +1,6 @@
 import pandas as pd
 
+deg_for_trimming = [' DO', ' MD']   # add degrees to be trimmed as needed
 # for removing the end of a string if it matches trailing
 def trim_string(astring, trailing):
     thelen = len(trailing)
