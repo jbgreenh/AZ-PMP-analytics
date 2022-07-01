@@ -30,4 +30,7 @@ generate a filtered version of the dea file
 WIP  
 
 ### clearinghouse_check
-check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``
+check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``  
+
+### medical_marijuana
+check medical marijuana list for registration and usage  
