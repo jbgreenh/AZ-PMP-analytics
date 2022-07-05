@@ -27,10 +27,10 @@ generate a file with the two data tabs for the monthly signups and county lists 
 generate a filtered version of the dea file  
 
 ### unregistered_prescribers
-WIP  
+generate a list for each board of their prescribers who are unregistered in awarxe (WIP)  
 
 ### clearinghouse_check
 check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``  
 
 ### medical_marijuana
-check medical marijuana list for registration and usage  
+check medical marijuana list for registration and usage (WIP)  
