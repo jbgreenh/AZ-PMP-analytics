@@ -19,7 +19,7 @@ def main():
     old = pd.read_excel('data/old_mm.xlsx', index_col=None)
     old = old[['Physician ID', 'DEA Number']]
 
-    deg_for_trimming = [' DO', ' MD', ' PA', ' NP']   # add degrees to be trimmed as needed
+    deg_for_trimming = [' DO', ' MD', ' PA', ' NP', ' ND']   # add degrees with a leading space to be trimmed as needed
 
     for deg in deg_for_trimming:
         awarxe['Last Name'] = awarxe['Last Name'].apply(lambda x: trim_string(x, deg))
@@ -38,6 +38,7 @@ def main():
         left_on='mm_code', right_on='awarxe_code', how='left').drop(['awarxe_code', 'mm_code'], axis=1)
     mm_code_match = mm_no_old_match[~mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_no_old_match[mm_no_old_match['DEA Number'].isnull()]
+    mm_match_neither = mm_match_neither.sort_values(by='Application Count', ascending=False)
 
     mm_matches_combined = pd.concat([mm_old_match, mm_code_match])
 
