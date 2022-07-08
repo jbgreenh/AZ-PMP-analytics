@@ -31,7 +31,6 @@ def main():
     mm = mm.merge(old[['Physician ID', 'DEA Number']], left_on='Physician Id', right_on='Physician ID', how='left').drop('Physician ID', axis=1)
     mm_old_match = mm[~mm['DEA Number'].isnull()]
     mm_no_old_match = mm[mm['DEA Number'].isnull()].drop('DEA Number', axis=1)
-    
 
     awarxe['awarxe_code'] = awarxe['Last Name'].str[-3:] + awarxe['Professional License Number'].str[-4:]
     mm_no_old_match['mm_code'] = mm_no_old_match['Physician Name'].str[-3:] + mm_no_old_match['License Number'].str[-4:]
