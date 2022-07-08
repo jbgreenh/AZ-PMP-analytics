@@ -8,8 +8,8 @@ def trim_string(astring, trailing):
     return astring
 
 awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
-awarxe = awarxe[['Last Name', 'Professional License Number', 'DEA Number']]
 awarxe = awarxe[~awarxe['DEA Number'].isnull()]
+awarxe = awarxe[['Last Name', 'Professional License Number', 'DEA Number']]
 awarxe['Last Name'] = awarxe['Last Name'].str.upper()
 
 deg_for_trimming = [', DO', ', MD', ', PA', ', NP']   # add degrees to be trimmed as needed
