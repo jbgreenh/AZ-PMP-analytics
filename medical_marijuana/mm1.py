@@ -15,6 +15,7 @@ def main():
 
     mm = pd.read_csv('data/mm_audit.csv', index_col=None)
     mm['Physician Name'] = mm['Physician Name'].str.upper()
+    mm['License Number'] = mm['License Number'].fillna('NONE')
 
     old = pd.read_excel('data/old_mm.xlsx', index_col=None)
     old = old[['Physician ID', 'DEA Number']]
