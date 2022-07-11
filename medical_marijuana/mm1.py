@@ -40,6 +40,7 @@ def main():
     mm_code_match = mm_no_old_match[~mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_no_old_match[mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_match_neither.sort_values(by='Application Count', ascending=False)
+    mm_match_neither['note'] = ''
 
     mm_matches_combined = pd.concat([mm_old_match, mm_code_match])
 
