@@ -47,6 +47,8 @@ def main():
     mm_match_neither.to_clipboard(index=False)
     print('generated data/mm_matches_combined.csv')
     print('copied mm_match_neither to clipboard')
+    print('please manually check all prescribers in mm_match_neither \nwith 20+ application count for DEA numbers')
+    print('and save to data/mm_manual.csv, then run mm2.py')
 
 if __name__ == '__main__':
     main()
