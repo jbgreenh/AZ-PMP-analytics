@@ -35,4 +35,4 @@ check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``
 ### medical_marijuana
 check medical marijuana list for registration and usage  
 ``mm1.py`` generates files and copies the prescribers for manual matching to the clipboard  
-``mm2.py`` will combine the manual matches with the generated matches and the lookups to produce the final report (WIP)  
+``mm2.py`` combines the manual matches with the generated matches and the lookups to produce the final report  
