@@ -7,7 +7,7 @@ python setup.py install
 pip install -r requirements.txt
 ```
 ### usage
-add or update the required files from `required_files.txt` to the data folder of the script you wish to run  
+add (or update) the required files from `required_files.txt` to the data folder of the script you wish to run  
 run the python script in the folder
   
 ### compliance_pharmacists
