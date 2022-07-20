@@ -18,7 +18,7 @@ def signups(out_fp):
     az_dispensations = az_dispensations.drop(az_dispensations.dropna(subset=['dea_suffix']).index)
     pro_info_sum = az_dispensations[['dea_number', 'rx_count']].groupby('dea_number', as_index=False).sum()
     az_pro_info = pd.merge(pro_info_sum, deas[['DEA Number', 'Name', 'Address 1', 'Address 2', 'Address 3', 'City', 'State', 'Zip Code']], 
-        left_on='dea_number', right_on='DEA Number', how='inner').drop('DEA Number', axis=1)
+        left_on='dea_number', right_on='DEA Number', how='inner').drop(columns=['DEA Number'])
 
     # fix typos in city and add county
     # TODO add report of unmatched typos
@@ -27,7 +27,7 @@ def signups(out_fp):
     az_pro_info = pd.merge(az_pro_info, typo_city_lkup[['CityError', 'City']], 
         left_on='pi_city', right_on='CityError', how='left')
     az_pro_info['fixed_city'] = az_pro_info['City'].fillna(az_pro_info['pi_city'])
-    az_pro_info = az_pro_info.drop(['pi_city','CityError','City'], axis=1)
+    az_pro_info = az_pro_info.drop(columns=['pi_city','CityError','City'])
     az_pro_info.rename(columns={'fixed_city':'City'}, inplace=True)
     az_pro_info = pd.merge(az_pro_info, city_county_lkup[['City', 'County']], how='left')
 
@@ -45,7 +45,7 @@ def signups(out_fp):
 
     # drop vets from list
     az_pro_info = az_pro_info.merge(new_exclude_dvm, left_on='dea_number', right_on='DEA', how='left', indicator=True)
-    az_pro_info = az_pro_info[az_pro_info['_merge'] == 'left_only'].drop(['DEA', '_merge'], axis=1)
+    az_pro_info = az_pro_info[az_pro_info['_merge'] == 'left_only'].drop(columns=['DEA', '_merge'])
 
     # drop hospital style names
     az_pro_info = az_pro_info[~az_pro_info['Name'].str.contains('CENTER|HOSPITAL|SCOTTSDALE|MEDICAL|REGIONAL')]

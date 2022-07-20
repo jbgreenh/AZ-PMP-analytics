@@ -26,25 +26,25 @@ def run_it():
 
     # igov pharmacy: add business name and subtype
     final_sheet = pd.merge(inspection_list, pharmacies_igov[['License/Permit #', 'Business Name', 'SubType']], 
-        left_on='Permit #', right_on='License/Permit #', how='left').drop(['License/Permit #'], axis=1)
+        left_on='Permit #', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 
     # manage pharmacies: add pharmacy DEA
     final_sheet = pd.merge(final_sheet, manage_pharmacies[['Pharmacy License Number', 'DEA']],
-        left_on='Permit #', right_on='Pharmacy License Number', how='left').drop(['Pharmacy License Number'], axis=1)
+        left_on='Permit #', right_on='Pharmacy License Number', how='left').drop(columns=['Pharmacy License Number'])
     final_sheet.rename(columns={'DEA':'PharmacyDEA'}, inplace=True)
 
     # igov pharmacist: add name, status, phone, and email
     final_sheet = pd.merge(final_sheet, pharmacists_igov[['License/Permit #', 'First Name', 'Middle Name', 'Last Name', 'Status', 'Phone', 'Email']],
-        left_on='License #', right_on='License/Permit #', how='left').drop(['License/Permit #'], axis=1)
+        left_on='License #', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 
     # awarxe: check registration and add review date
     final_sheet = final_sheet.assign(awarxe=final_sheet['License #'].isin(awarxe['Professional License Number']))
     final_sheet['awarxe'] = final_sheet['awarxe'].map({True:'YES' ,False:'NO'})
     final_sheet = pd.merge(final_sheet, awarxe[['Professional License Number', 'Registration Review Date']],
-        left_on='License #', right_on='Professional License Number', how='left').drop('Professional License Number', axis=1)
+        left_on='License #', right_on='Professional License Number', how='left').drop(columns=['Professional License Number'])
 
     # add lookups
-    final_sheet = pd.merge(final_sheet, lookups, left_on="License #", right_on='prof_lic', how='left').drop('prof_lic', axis=1)
+    final_sheet = pd.merge(final_sheet, lookups, left_on="License #", right_on='prof_lic', how='left').drop(columns=['prof_lic'])
     final_sheet.rename(columns={'totallookups':'lookups in date range'}, inplace=True)
 
     # rearrange columns
@@ -59,7 +59,7 @@ def run_it():
     # usage table
     usage = final_sheet[['Permit #', 'lookups in date range']].groupby('Permit #', as_index=False).sum()
     usage = pd.merge(usage, final_sheet[['Permit #', 'PharmacyDEA', 'Business Name', 'SubType', 'Date Range', 'Notes']], how='left')
-    usage = pd.merge(usage, sched_2, left_on='PharmacyDEA', right_on='Pharmacy DEA', how='left').drop('Pharmacy DEA', axis=1)
+    usage = pd.merge(usage, sched_2, left_on='PharmacyDEA', right_on='Pharmacy DEA', how='left').drop(columns=['Pharmacy DEA'])
     usage.rename(columns={'Prescription Count':'pharmacy sched 2'}, inplace=True)
     usage = usage[['Permit #', 'PharmacyDEA', 'Business Name', 'SubType',
         'lookups in date range', 'pharmacy sched 2', 'Date Range',
