@@ -27,7 +27,7 @@ generate a file with the two data tabs for the monthly signups and county lists 
 generate a filtered version of the dea file  
 
 ### unregistered_prescribers
-generate a list for each board of their prescribers who are unregistered in awarxe (WIP)  
+generate a list for each board of their prescribers who are unregistered in awarxe  
 
 ### clearinghouse_check
 check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``  
