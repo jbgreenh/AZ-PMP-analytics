@@ -35,6 +35,10 @@ az_presc_q = az_presc_q[['awarxe', 'DEA Number', 'Name', 'Address 1', 'Address 2
 board_counts = az_presc_q['board'].value_counts().reset_index()
 board_counts = board_counts.rename(columns={'index':'board', 'board':'NOs'})
 board_counts = board_counts[board_counts['board'] != 'Veterinary']
+board_counts = board_counts[board_counts['board'] != 'Homeopathic']
+
+total_row = pd.DataFrame({'board':['Total'], 'NOs':board_counts['NOs'].sum()})
+board_counts = pd.concat([board_counts, total_row])
 
 dental = az_presc_q[az_presc_q['board'] == 'Dental']
 medical = az_presc_q[az_presc_q['board'] == 'Medical']
