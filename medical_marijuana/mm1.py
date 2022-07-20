@@ -29,14 +29,14 @@ def main():
         mm['Physician Name'] = mm['Physician Name'].apply(lambda x: trim_string(x, ','))
 
     # check the old file for matches on physician id
-    mm = mm.merge(old[['Physician ID', 'DEA Number']], left_on='Physician Id', right_on='Physician ID', how='left').drop('Physician ID', axis=1)
+    mm = mm.merge(old[['Physician ID', 'DEA Number']], left_on='Physician Id', right_on='Physician ID', how='left').drop(columns=['Physician ID'])
     mm_old_match = mm[~mm['DEA Number'].isnull()]
-    mm_no_old_match = mm[mm['DEA Number'].isnull()].drop('DEA Number', axis=1)
+    mm_no_old_match = mm[mm['DEA Number'].isnull()].drop(columns=['DEA Number'])
 
     awarxe['awarxe_code'] = awarxe['Last Name'].str[-3:] + awarxe['Professional License Number'].str[-4:]
     mm_no_old_match['mm_code'] = mm_no_old_match['Physician Name'].str[-3:] + mm_no_old_match['License Number'].str[-4:]
     mm_no_old_match = mm_no_old_match.merge(awarxe[['awarxe_code', 'DEA Number']], 
-        left_on='mm_code', right_on='awarxe_code', how='left').drop(['awarxe_code', 'mm_code'], axis=1)
+        left_on='mm_code', right_on='awarxe_code', how='left').drop(columns=['awarxe_code', 'mm_code'])
     mm_code_match = mm_no_old_match[~mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_no_old_match[mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_match_neither.sort_values(by='Application Count', ascending=False)
