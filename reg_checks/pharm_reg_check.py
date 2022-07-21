@@ -19,9 +19,9 @@ def check_reg(input_fp, output_fp, lino_col_name):
 
 def main():
     in_fp = input('input file path? ex: data/test.xlsx\n')
-    out_fp = input('output file path? ex: ~/Downloads/pharmq.xlsx\n')
+    out_fp = input('output file path? ex: data/pharmq.xlsx\n')
     if out_fp == '':
-        out_fp = '~/Downloads/pharmq.xlsx'
+        out_fp = 'data/pharmq.xlsx'
     li_col = input('license number column name? ex: License #\n')
     if li_col == '':
         li_col = 'License #'

@@ -19,9 +19,9 @@ def check_reg(input_fp, output_fp, dea_col_name):
 
 def main():
     in_fp = input('input file path? ex: data/test.xlsx\n')
-    out_fp = input('output file path? ex: ~/Downloads/prescq.xlsx\n')
+    out_fp = input('output file path? ex: data/prescq.xlsx\n')
     if out_fp == '':
-        out_fp = '~/Downloads/prescq.xlsx'
+        out_fp = 'data/prescq.xlsx'
     dea_col = input('dea number column name? ex: DEA Number\n')
     if dea_col == '':
         dea_col = 'DEA Number'
