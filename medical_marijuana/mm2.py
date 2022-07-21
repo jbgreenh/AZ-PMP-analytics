@@ -43,9 +43,9 @@ def mm(output_fp):
     print(f'{output_fp} saved')
 
 def main():
-    out_fp = input('output file path? ex: ~/Downloads/mmq.xlsx\n')
+    out_fp = input('output file path? ex: data/mmq.xlsx\n')
     if out_fp == '':
-        out_fp = '~/Downloads/mmq.xlsx'
+        out_fp = 'data/mmq.xlsx'
     mm(out_fp)
 
 if __name__ == '__main__':

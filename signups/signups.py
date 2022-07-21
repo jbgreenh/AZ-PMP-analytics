@@ -94,7 +94,7 @@ def signups(out_fp):
     print(f'{out_fp} saved')
 
 def main():
-    out_fp = '~/Downloads/monthly_signups.xlsx' # ~/Downloads/
+    out_fp = 'data/monthly_signups.xlsx'
     signups(out_fp)
 
 if __name__ == "__main__":
