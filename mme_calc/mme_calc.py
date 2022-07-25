@@ -29,6 +29,6 @@ else:
     mme = strength * (quantity / days_supply) * float(cf)
 
 
-f'### MME: {mme}'
+st.write(f'### MME: <span style="color:#C33921">{mme}</span>', unsafe_allow_html=True)
 
 
