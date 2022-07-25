@@ -21,13 +21,17 @@ opioid = st.sidebar.selectbox(
 cf = conversion_factors[opioid]
 st.sidebar.write(f'`{opioid}` conversion factor: **{cf}**')
 
-strength = float(st.sidebar.text_input('Strength/Unit', 50))
-quantity = float(st.sidebar.text_input('Quantity', 30))
-days_supply = float(st.sidebar.text_input('Days Supply', 30))
+strength = st.sidebar.text_input('Strength/Unit', 50)
+quantity = st.sidebar.text_input('Quantity', 30)
+days_supply = st.sidebar.text_input('Days Supply', 30)
 if cf == 'N/A':
     mme = 'N/A'
 else:
-    mme = strength * (quantity / days_supply) * float(cf)
+    try:
+        mme = float(strength) * (float(quantity) / float(days_supply)) * float(cf)
+        round(mme, 2)
+    except:
+        mme = 'please enter numbers in all of the fields'
 
 
 st.write(f'### MME: <span style="color:#C33921">{mme}</span>', unsafe_allow_html=True)
