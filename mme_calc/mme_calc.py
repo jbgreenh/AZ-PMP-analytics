@@ -28,8 +28,7 @@ if cf == 'N/A':
     mme = 'N/A'
 else:
     try:
-        mme = float(strength) * (float(quantity) / float(days_supply)) * float(cf)
-        round(mme, 2)
+        mme = round(float(strength) * (float(quantity) / float(days_supply)) * float(cf), 2)
     except:
         mme = 'please enter numbers in all of the fields'
 
