@@ -10,7 +10,8 @@ with open('data/conversion_factors.csv', 'r') as csvfile:
 st.write(
     """
     # MME Calculator
-    *Please select an opioid in the sidebar and fill in the strength, quantity, and days supply fields*
+    Please select an opioid in the sidebar and fill in the strength, quantity, and days supply fields   
+    *MME = strength * (quantity / days supply) * conversion factor*
     """)
 
 opioid = st.sidebar.selectbox(
