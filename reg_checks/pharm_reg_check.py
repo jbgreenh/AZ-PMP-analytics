@@ -5,6 +5,12 @@ def check_reg(input_fp, output_fp, lino_col_name):
     awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
     input = pd.read_excel(input_fp, index_col=None)
 
+    # input and awarxe license number to upper case
+    input[lino_col_name] = input[lino_col_name].str.upper()
+    input[lino_col_name] = input[lino_col_name].str.strip()
+    awarxe['Professional License Number'] = awarxe['Professional License Number'].str.upper()
+    awarxe['Professional License Number'] = awarxe['Professional License Number'].str.strip()
+
     output = input.assign(awarxe=input[lino_col_name].isin(awarxe['Professional License Number']))
     output['awarxe'] = output['awarxe'].map({True:'YES' ,False:'NO'})
 
