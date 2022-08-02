@@ -5,6 +5,10 @@ def check_reg(input_fp, output_fp, dea_col_name):
     awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
     input = pd.read_excel(input_fp, index_col=None)
 
+    # input DEA number to upper case
+    input[dea_col_name] = input[dea_col_name].str.upper()
+    input[dea_col_name] = input[dea_col_name].str.strip()
+    
     output = input.assign(awarxe=input[dea_col_name].isin(awarxe['DEA Number']))
     output['awarxe'] = output['awarxe'].map({True:'YES' ,False:'NO'})
 
