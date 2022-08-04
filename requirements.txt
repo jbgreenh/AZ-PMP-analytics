@@ -5,3 +5,4 @@ XlsxWriter
 Jinja2
 openpyxl
 streamlit
+pyperclip
