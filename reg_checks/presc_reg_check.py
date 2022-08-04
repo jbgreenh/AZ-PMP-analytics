@@ -8,6 +8,8 @@ def check_reg(input_fp, output_fp, dea_col_name):
     # input DEA number to upper case
     input[dea_col_name] = input[dea_col_name].str.upper()
     input[dea_col_name] = input[dea_col_name].str.strip()
+    awarxe['DEA Number'] = awarxe['DEA Number'].str.upper()
+    awarxe['DEA Number'] = awarxe['DEA Number'].str.strip()
     
     output = input.assign(awarxe=input[dea_col_name].isin(awarxe['DEA Number']))
     output['awarxe'] = output['awarxe'].map({True:'YES' ,False:'NO'})
