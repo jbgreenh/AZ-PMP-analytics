@@ -1,3 +1,3 @@
-az_pharmacy_deas.csv
+az_pharmacy_deas.csv    # see deas folder
 clearinghouse.csv
 igov_pharmacy.csv
