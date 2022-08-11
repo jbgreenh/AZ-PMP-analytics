@@ -1,7 +1,7 @@
 import sys
 import pandas as pd
 
-def compiance():
+def compliance():
     awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
     inspection_list = pd.read_csv('data/inspection_list.csv', index_col=None)
     manage_pharmacies = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
@@ -75,10 +75,10 @@ def main():
         print('python compliance_pharmacists.py reg')
         print('python compliance_pharmacists.py use')
     elif sys.argv[1] == 'reg':
-        compiance()[0].to_clipboard(index=False)
+        compliance()[0].to_clipboard(index=False)
         print('copied reg to clipoard')
     else:
-        compiance()[1].to_clipboard(index=False)
+        compliance()[1].to_clipboard(index=False)
         print('copied use to clipboard')
 
 if __name__ == "__main__":
