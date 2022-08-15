@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 
 def compliance():
-    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
     inspection_list = pd.read_csv('data/inspection_list.csv', index_col=None)
     manage_pharmacies = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
     sched_2 = pd.read_csv('data/pharmacy_sched_2.csv', index_col=None)

@@ -2,7 +2,7 @@ import pandas as pd
 from utils.sheet_formatting import *
 
 def Main():
-    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
     boards = pd.read_csv('data/boards.csv', index_col=None)
     exclude_degs = pd.read_csv('data/exclude_degs.csv', index_col=None)
     az_presc_deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)

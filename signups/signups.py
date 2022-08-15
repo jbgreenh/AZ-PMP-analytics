@@ -5,7 +5,7 @@ def signups(out_fp):
     '''generate an excel file at out_fp with Totals and County Lists tabs'''
     # read necessary tables
     deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
-    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
     dispensations = pd.read_csv('data/az_dispensations.csv', sep='|')
     exclude_dvm = pd.read_csv('data/exclude_dvm.csv', index_col=None)
     city_county_lkup = pd.read_csv('data/lookup_city_county.csv', index_col=None)

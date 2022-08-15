@@ -1,4 +1,4 @@
 boards.csv
 exclude_degs.csv
-awarxe.xlsx
+awarxe.xls
 az_prescriber_deas.csv

@@ -8,7 +8,7 @@ def trim_string(astring, trailing):
     return astring
 
 def main():
-    awarxe = pd.read_excel('data/awarxe.xlsx', skiprows=1, index_col=None)
+    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
     awarxe = awarxe[~awarxe['DEA Number'].isnull()]
     awarxe = awarxe[['Last Name', 'Professional License Number', 'DEA Number']]
     awarxe['Last Name'] = awarxe['Last Name'].str.upper()
