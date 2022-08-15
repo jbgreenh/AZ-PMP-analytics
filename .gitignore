@@ -4,4 +4,5 @@
 **/*.txt
 build
 dist
+temp
 utils.egg-info
