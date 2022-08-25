@@ -42,3 +42,6 @@ find sum of naloxone doses dispensed and generate email body
 
 ### scorecard
 generate the monthly scorecard for % of prescriber PMP usage  
+
+### temp
+miscellaneous scripts for adhoc reporting  
