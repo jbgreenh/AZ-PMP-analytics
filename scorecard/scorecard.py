@@ -1,11 +1,11 @@
 import pandas as pd
 
-def scorecard(fp, ob=False):
+def scorecard(ob=False):
     if ob:
-        df_47 = pd.read_csv(f'data/47/disp_{fp}_ob.csv', sep='|')
+        df_47 = pd.read_csv(f'data/disp_ob.csv', sep='|')
     else:
-        df_47 = pd.read_csv(f'data/47/disp_{fp}.csv', sep='|')
-    df_48 = pd.read_csv(f'data/48/{fp}.csv', sep='|')
+        df_47 = pd.read_csv(f'data/disp.csv', sep='|')
+    df_48 = pd.read_csv(f'data/lookups.csv', sep='|')
     
     df_47 = df_47[df_47['state'] == 'AZ']
     df_47 = df_47[['dea_number']]
@@ -25,11 +25,8 @@ def scorecard(fp, ob=False):
     return df_lookups
 
 def main():
-    reg_scores = pd.DataFrame(columns=['n_prescribers', 'n_lookups', '%'])
-    ob_scores = pd.DataFrame(columns=['ob_n_prescribers', 'ob_n_lookups', 'ob_%'])
-    for fp in range(1, 17):
-        reg_scores = pd.concat([reg_scores, scorecard(fp)])
-        ob_scores = pd.concat([ob_scores, scorecard(fp, ob=True)])
+    reg_scores = scorecard()
+    ob_scores = ob_scores, scorecard(ob=True)
     
     combined = pd.concat([reg_scores, ob_scores], axis=1)
 
