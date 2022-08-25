@@ -20,13 +20,14 @@ def scorecard(ob=False):
     n_lookups_str = f'{round(n_lookups_per, 2)}%'
     ob_str = 'ob_' if ob else ''
     df_lookups = pd.DataFrame({f'{ob_str}n_prescribers': [n], f'{ob_str}n_lookups': [n_lookups], f'{ob_str}%': [n_lookups_str]})
-    score_str = f'{ob = } {n_lookups} / {n} = {n_lookups_str}'
+    score_ob_str = 'percent of ob prescribers with a lookup:' if ob else 'percent of cs prescribers with a lookup:'
+    score_str = f'{score_ob_str} {n_lookups} / {n} = {n_lookups_str}'
     print(score_str)
     return df_lookups
 
 def main():
     reg_scores = scorecard()
-    ob_scores = ob_scores, scorecard(ob=True)
+    ob_scores = scorecard(ob=True)
     
     combined = pd.concat([reg_scores, ob_scores], axis=1)
 
