@@ -39,3 +39,6 @@ check medical marijuana list for registration and usage
 
 ### naloxone  
 find sum of naloxone doses dispensed and generate email body  
+
+### scorecard
+generate the monthly scorecard for % of prescriber PMP usage  
