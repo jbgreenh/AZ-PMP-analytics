@@ -31,6 +31,11 @@ def signups(out_fp):
     az_pro_info.rename(columns={'fixed_city':'City'}, inplace=True)
     az_pro_info = pd.merge(az_pro_info, city_county_lkup[['City', 'County']], how='left')
 
+    # make a list of prescribers with no county
+    no_county = az_pro_info[az_pro_info['County'].isna()]
+    no_county.to_clipboard(index=False)
+    print('prescribers with no county have been copied to clipboard')
+
     # keep only prescribers with a county
     az_pro_info = az_pro_info[az_pro_info['County'].notna()]
 
@@ -96,6 +101,7 @@ def signups(out_fp):
 def main():
     out_fp = 'data/monthly_signups.xlsx'
     signups(out_fp)
+
 
 if __name__ == "__main__":
     main()
