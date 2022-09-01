@@ -21,7 +21,6 @@ def signups(out_fp):
         left_on='dea_number', right_on='DEA Number', how='inner').drop(columns=['DEA Number'])
 
     # fix typos in city and add county
-    # TODO add report of unmatched typos
     az_pro_info.rename(columns={'City':'pi_city'}, inplace=True)
     az_pro_info['pi_city'] = az_pro_info['pi_city'].str.upper()
     az_pro_info = pd.merge(az_pro_info, typo_city_lkup[['CityError', 'City']], 
