@@ -1,6 +1,4 @@
-from xml.etree.ElementTree import tostring
 import pandas as pd
-import numpy as np
 from openpyxl import load_workbook
 import datetime
 from utils.sheet_formatting import *
