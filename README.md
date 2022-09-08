@@ -6,6 +6,13 @@ using python 3.10 (you may need to add --user to the end of the first command)
 python setup.py install
 pip install -r requirements.txt
 ```
+to update all required packages:    
+```
+pip uninstall utils
+python setup.py install
+pip install r requirements.txt
+```
+
 ### usage
 add (or update) the required files from `required_files.txt` to the data folder of the script you wish to run  
 run the python script in the folder
