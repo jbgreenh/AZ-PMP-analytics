@@ -117,10 +117,11 @@ def signups():
     az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='openpyxl')
     set_col_widths_openpyxl(writer, az_pro_info, 'County Lists')
     writer.save()
-    print(f'signups saved')
 
 def main():
+    print('starting signups')
     signups()
+    print('signups saved')
 
 if __name__ == "__main__":
     main()
