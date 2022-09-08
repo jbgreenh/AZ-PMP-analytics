@@ -95,6 +95,7 @@ def signups():
     print(f'number of CG prescriber delegates: {len(awarxe_delegates_presc)}')
     print(f'number of CG pharmacist delegates: {len(awarxe_delegates_pharm)}')
 
+    # write to excel
     template_wb = load_workbook('data/signups_template.xlsx')
     totals_ws = template_wb['Totals']
     totals_ws['A24'] = last_month
