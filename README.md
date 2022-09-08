@@ -28,7 +28,7 @@ check prescriber lists for registration in awarxe with ``presc_reg_check.py``
 check pharmacist lists for registration in awarxe with ``pharm_reg_check.py``  
 
 ### signups
-generate a file with the two data tabs for the monthly signups and county lists report  
+generate a file for the monthly signups and county lists report  
 
 ### deas
 generate a filtered version of the dea file  
