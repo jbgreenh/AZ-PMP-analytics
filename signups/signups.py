@@ -1,7 +1,11 @@
+from xml.etree.ElementTree import tostring
 import pandas as pd
+import numpy as np
+from openpyxl import load_workbook
+import datetime
 from utils.sheet_formatting import *
 
-def signups(out_fp):
+def signups():
     '''generate an excel file at out_fp with Totals and County Lists tabs'''
     # read necessary tables
     deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
@@ -70,21 +74,20 @@ def signups(out_fp):
     yeses = yeses.groupby('County', as_index=False).count()
     county_count = az_pro_info[['County']].value_counts().reset_index(name='county_total')
     totals = pd.merge(yeses, county_count, on='County', how='inner')
-    sums_row = pd.DataFrame([['Total', totals['AWARxE Account?'].sum(), totals['county_total'].sum()]], columns=totals.columns)
-    totals = pd.concat([totals, sums_row])
-    totals['percent'] = (totals['AWARxE Account?'] / totals['county_total']) * 100
-    totals = totals.round({'percent':2})
-    totals.rename(columns={'AWARxE Account?':'Number of PMP Registrants1', 
-        'county_total':'Number of Controlled Substance (II-IV) Prescribers (last 12 months)2',
-        'percent':'Percentage3'}, inplace=True)
+    
+    # get the previous month
+    today = datetime.date.today()
+    first = today.replace(day=1)
+    last_month_day = first - datetime.timedelta(days=1)
+    last_month = last_month_day.strftime('%B')
+    last_month_year = last_month_day.strftime('%Y')
+    last_month = f'{last_month} {last_month_year}'
 
-    # write to output_fp
-    writer = pd.ExcelWriter(out_fp)
+    # get the number of the current month
+    cur_month = today.strftime('%m')
+    cur_year = today.strftime('%Y')
 
-    totals.to_excel(writer, index=False, sheet_name='Totals', engine='xlsxwriter')
-    az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='xlsxwriter')
-    set_col_widths(writer, totals, 'Totals')
-    set_col_widths(writer, az_pro_info, 'County Lists')
+    name_str = f'data/SignUps${cur_month}01{cur_year}$.xlsx'
 
     # get delegate users in casa grande
     awarxe_delegates = awarxe[awarxe['Role Title'].str.contains('Delegate') | awarxe['Role Title'].str.contains('Technician')]
@@ -94,19 +97,30 @@ def signups(out_fp):
     print(f'number of CG prescriber delegates: {len(awarxe_delegates_presc)}')
     print(f'number of CG pharmacist delegates: {len(awarxe_delegates_pharm)}')
 
+    template_wb = load_workbook('data/signups_template.xlsx')
+    totals_ws = template_wb['Totals']
+    totals_ws['A24'] = last_month
+    totals_ws['C21'] = len(awarxe_delegates_presc)
+    totals_ws['D21'] = len(awarxe_delegates_pharm)
+
+    totals_np = totals.to_numpy()
+    for i in range(3,18):
+        j = i - 3
+        totals_ws[f'B{i}'] = totals_np[j][1]
+        totals_ws[f'C{i}'] = totals_np[j][2]
+
+    template_wb.save(name_str)
+
+    book = load_workbook(name_str)
+    writer = pd.ExcelWriter(name_str, engine='openpyxl')
+    writer.book = book
+    az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='openpyxl')
+    set_col_widths_openpyxl(writer, az_pro_info, 'County Lists')
     writer.save()
-    print(f'{out_fp} saved')
+    print(f'signups saved')
 
 def main():
-    out_fp = 'data/monthly_signups.xlsx'
-    signups(out_fp)
-
+    signups()
 
 if __name__ == "__main__":
     main()
-
-# TODO
-# cover page
-# formatting
-
-# for adding images: https://xlsxwriter.readthedocs.io/example_images.html
