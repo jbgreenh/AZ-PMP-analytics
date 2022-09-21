@@ -10,7 +10,7 @@ to update all required packages:
 ```
 pip uninstall utils
 python setup.py install
-pip install r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### usage
