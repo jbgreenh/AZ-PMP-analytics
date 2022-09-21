@@ -85,7 +85,7 @@ def signups():
     cur_month = today.strftime('%m')
     cur_year = today.strftime('%Y')
 
-    name_str = f'data/SignUps${cur_month}01{cur_year}$.xlsx'
+    name_str = f'data/signups{cur_month}01{cur_year}.xlsx'
 
     # get delegate users in casa grande
     awarxe_delegates = awarxe[awarxe['Role Title'].str.contains('Delegate') | awarxe['Role Title'].str.contains('Technician')]
