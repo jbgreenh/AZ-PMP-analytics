@@ -1,3 +1,4 @@
 az_pharmacy_deas.csv    # see deas folder
-clearinghouse.csv
+manage_pharmacies.csv
 igov_pharmacy.csv
+submits.csv
