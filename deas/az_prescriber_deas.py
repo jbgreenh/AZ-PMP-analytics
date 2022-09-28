@@ -12,5 +12,6 @@ print('trying to read deas')
 deas = pd.read_fwf('data/cs_active.txt', widths=dea_widths, names=dea_names, encoding='latin-1')
 deas = deas[(deas['Business Activity Code'] == 'C') | (deas['Business Activity Code'] == 'M')]
 deas = deas[deas['State'] == 'AZ']
+print(deas.head())
 deas.to_csv('data/az_prescriber_deas.csv', index=False)
 print('updated data/az_prescriber_deas.csv')
