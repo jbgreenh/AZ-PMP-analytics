@@ -1,4 +1,5 @@
 import pandas as pd
+pd.options.display.max_columns = 999
 
 # widths and names according to the file format specifications provided by the DEA
 dea_widths = [9, 1, 16, 8, 40, 40, 40, 40, 33, 2, 5, 2, 1, 8, 10, 20, 20]
