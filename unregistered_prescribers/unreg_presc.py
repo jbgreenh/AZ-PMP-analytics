@@ -31,7 +31,7 @@ def Main():
 
     az_presc_q = az_presc_q.merge(boards, how='left', left_on='Degree', right_on='degree')
 
-    az_presc_q = az_presc_q[['awarxe', 'DEA Number', 'Name', 'Address 1', 'Address 2', 'Address 3', 'City', 'State', 'Zip Code', 'degree', 'State License Number', 'board']]
+    az_presc_q = az_presc_q[['awarxe', 'DEA Number', 'Name', 'Additional Company Info', 'Address 1', 'Address 2', 'City', 'State', 'Zip Code', 'degree', 'State License Number', 'board']]
 
     board_counts = az_presc_q['board'].value_counts().reset_index()
     board_counts = board_counts.rename(columns={'index':'board', 'board':'NOs'})

@@ -19,7 +19,7 @@ def signups():
     az_dispensations = dispensations[(dispensations['state'] == 'AZ') | (dispensations['state'] == 'ARIZONA')]
     az_dispensations = az_dispensations.drop(az_dispensations.dropna(subset=['dea_suffix']).index)
     pro_info_sum = az_dispensations[['dea_number', 'rx_count']].groupby('dea_number', as_index=False).sum()
-    az_pro_info = pd.merge(pro_info_sum, deas[['DEA Number', 'Name', 'Address 1', 'Address 2', 'Address 3', 'City', 'State', 'Zip Code']], 
+    az_pro_info = pd.merge(pro_info_sum, deas[['DEA Number', 'Name', 'Additional Company Info', 'Address 1', 'Address 2', 'City', 'State', 'Zip Code']], 
         left_on='dea_number', right_on='DEA Number', how='inner').drop(columns=['DEA Number'])
 
     # fix typos in city and add county
@@ -62,7 +62,7 @@ def signups():
     az_pro_info.drop_duplicates(subset="dea_number", keep='first', inplace=True)
 
     # rearrange and sort the table
-    az_pro_info = az_pro_info[['awarxe', 'County', 'Name', 'Address 1', 'Address 2', 'Address 3', 'City', 'State', 'Zip Code']]
+    az_pro_info = az_pro_info[['awarxe', 'County', 'Name', 'Additional Company Info', 'Address 1', 'Address 2', 'City', 'State', 'Zip Code']]
     az_pro_info.sort_values(['County'], inplace=True)
     az_pro_info.rename(columns={'awarxe':'AWARxE Account?', 'Name':'Prescriber Name'}, inplace=True)
 
