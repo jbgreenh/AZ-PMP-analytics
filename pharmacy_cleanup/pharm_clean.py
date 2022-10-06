@@ -12,7 +12,7 @@ ddr = pd.merge(ddr, igov[['License/Permit #', 'Status']],
 ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=True)
 
 #get today's date as a string
-today = date.today().strftime("%m%d%Y")
+today = date.today().strftime("%m-%d-%Y")
 ddr['Date List Pulled'] = today
 
 #rearrange columns
