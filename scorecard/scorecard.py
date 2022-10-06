@@ -31,7 +31,7 @@ def main():
     
     combined = pd.concat([reg_scores, ob_scores], axis=1)
 
-    combined.to_clipboard(index=False)
+    combined.to_clipboard(index=False, header=False)
     print('combined copied to clipboard')
 
 if __name__ == '__main__':
