@@ -2,6 +2,7 @@
 **/*.xls
 **/*.csv
 **/*.txt
+config.json
 build
 dist
 utils.egg-info
