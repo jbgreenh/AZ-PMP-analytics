@@ -1,11 +1,20 @@
+import datetime
 import pandas as pd
+from utils.from_sftp import *
 
 def scorecard(ob=False):
+    # get previous month in YYYYMM format
+    today = datetime.datetime.now()
+    m_y = today.replace(day=1) - datetime.timedelta(days=1)
+    m_y = m_y.strftime('%Y%m')
+    
     if ob:
-        df_47 = pd.read_csv(f'data/disp_ob.csv', sep='|')
+        print(f'getting {m_y} ob data')
+        df_47 = from_sftp(f'/Monthly/REPORTAE_47/Dispensations/AZ_Dispensations_{m_y}_opioid_benzo.csv')
     else:
-        df_47 = pd.read_csv(f'data/disp.csv', sep='|')
-    df_48 = pd.read_csv(f'data/lookups.csv', sep='|')
+        print(f'getting {m_y} data')
+        df_47 = from_sftp(f'/Monthly/REPORTAE_47/Dispensations/AZ_Dispensations_{m_y}.csv')
+    df_48 = from_sftp(f'/Monthly/Patient_Requests_REPORTAE_48/AZ_PtReqByProfile_{m_y}/Prescriber.csv')
     
     df_47 = df_47[df_47['state'] == 'AZ']
     df_47 = df_47[['dea_number']]

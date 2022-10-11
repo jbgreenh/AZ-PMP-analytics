@@ -1,5 +1,7 @@
 import sys
+import datetime
 import pandas as pd
+from utils.from_sftp import *
 
 def compliance():
     awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
@@ -9,8 +11,21 @@ def compliance():
     pharmacies_igov = pd.read_csv('data/igov_pharmacy.csv', index_col=None)
     pharmacists_igov = pd.read_csv('data/igov_pharmacist.csv', index_col=None)
 
-    lookups_mo_1 = pd.read_csv('data/lookups_mo_1.csv', sep='|', index_col=None)
-    lookups_mo_2 = pd.read_csv('data/lookups_mo_2.csv', sep='|', index_col=None)
+    # get the two months needed for the report
+    inspect_date = inspection_list['Last Insp'].iloc[0]
+    inspect_date = datetime.datetime.strptime(inspect_date, '%m/%d/%Y')
+    m2 = inspect_date.replace(day=1) - datetime.timedelta(days=1)
+    m1 = m2.replace(day=1) - datetime.timedelta(days=1)
+    m2 = m2.strftime('%Y%m')
+    m1 = m1.strftime('%Y%m')
+    print(f'pharmacist compliance report for {m1} and {m2}')
+
+    # get the lookups from the sftp
+    path_mid = '/Monthly/Patient_Requests_REPORTAE_48/AZ_PtReqByProfile_'
+    path_tail_m1 = f'{path_mid}{m1}/Pharmacist.csv'
+    path_tail_m2 = f'{path_mid}{m2}/Pharmacist.csv'
+    lookups_mo_1 = from_sftp(path_tail_m1)
+    lookups_mo_2 = from_sftp(path_tail_m2)
     lookups = pd.concat([lookups_mo_1, lookups_mo_2])
     lookups = lookups[['prof_lic', 'totallookups']].groupby('prof_lic', as_index=False).sum()
 

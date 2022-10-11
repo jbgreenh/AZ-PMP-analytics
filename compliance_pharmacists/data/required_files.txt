@@ -2,7 +2,6 @@ awarxe.xls
 igov_pharmacist.csv
 igov_pharmacy.csv
 inspection_list.csv
-lookups_mo_1.csv
-lookups_mo_2.csv
 manage_pharmacies.csv
 pharmacy_sched_2.csv
+# lookups come from the sftp
