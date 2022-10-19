@@ -1,5 +1,4 @@
 awarxe.xls
-az_dispensations.csv
 az_prescriber_deas.csv  # see deas folder
 exclude_dvm.csv
 lookup_city_county.csv

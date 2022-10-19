@@ -2,16 +2,39 @@ import pandas as pd
 from openpyxl import load_workbook
 import datetime
 from utils.sheet_formatting import *
+from utils.from_sftp import *
 
 def signups():
-    '''generate an excel file at out_fp with Totals and County Lists tabs'''
+    '''generate an excel file using the signups_template'''
     # read necessary tables
     deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
     awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
-    dispensations = pd.read_csv('data/az_dispensations.csv', sep='|')
     exclude_dvm = pd.read_csv('data/exclude_dvm.csv', index_col=None)
     city_county_lkup = pd.read_csv('data/lookup_city_county.csv', index_col=None)
     typo_city_lkup = pd.read_csv('data/lookup_mispelled_city.csv', index_col=None)
+
+    # get the previous month
+    today = datetime.date.today()
+    first = today.replace(day=1)
+    last_month_day = first - datetime.timedelta(days=1)
+    last_month_name = last_month_day.strftime('%B')
+    last_month_num = last_month_day.strftime('%m')
+    last_month_year = last_month_day.strftime('%Y')
+    last_month_str = f'{last_month_name} {last_month_year}'
+
+    # get the numbers of the current month and year
+    cur_month = today.strftime('%m')
+    cur_year = today.strftime('%Y')
+
+    # format the date for sftp file name
+    last_my = f'{int(cur_year) - 1}{cur_month}'
+    cur_my = f'{last_month_year}{last_month_num}'
+    print(f'getting {last_my} - {cur_my} data')
+
+    dispensations = from_sftp(f'/Monthly/REPORTAE_47/Dispensations_12_Months/AZ_Dispensations_{last_my}_{cur_my}.csv')
+
+    # output file path
+    name_str = f'data/signups{cur_month}01{cur_year}.xlsx'
 
     dispensations['state'] = dispensations['state'].str.upper()
 
@@ -72,20 +95,6 @@ def signups():
     yeses = yeses.groupby('County', as_index=False).count()
     county_count = az_pro_info[['County']].value_counts().reset_index(name='county_total')
     totals = pd.merge(yeses, county_count, on='County', how='inner')
-    
-    # get the previous month
-    today = datetime.date.today()
-    first = today.replace(day=1)
-    last_month_day = first - datetime.timedelta(days=1)
-    last_month = last_month_day.strftime('%B')
-    last_month_year = last_month_day.strftime('%Y')
-    last_month = f'{last_month} {last_month_year}'
-
-    # get the number of the current month
-    cur_month = today.strftime('%m')
-    cur_year = today.strftime('%Y')
-
-    name_str = f'data/signups{cur_month}01{cur_year}.xlsx'
 
     # get delegate users in casa grande
     awarxe_delegates = awarxe[awarxe['Role Title'].str.contains('Delegate') | awarxe['Role Title'].str.contains('Technician')]
@@ -98,7 +107,7 @@ def signups():
     # write to excel
     template_wb = load_workbook('data/signups_template.xlsx')
     totals_ws = template_wb['Totals']
-    totals_ws['A24'] = last_month
+    totals_ws['A24'] = last_month_str
     totals_ws['C21'] = len(awarxe_delegates_presc)
     totals_ws['D21'] = len(awarxe_delegates_pharm)
 
