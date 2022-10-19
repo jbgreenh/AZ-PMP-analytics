@@ -11,15 +11,16 @@ ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=True)
 
-# if Street Address is blank, use Pharmacy Address
+# favor info from igov over manage pharmacies
 ddr['Street Address'] = ddr['Street Address'].fillna(ddr['Pharmacy Address'])
+ddr['Business Name'] = ddr['Business Name'].fillna(ddr['Pharmacy Name'])
 
 # get today's date as a string
 today = date.today().strftime("%m-%d-%Y")
 ddr['Date List Pulled'] = today
 
 # rearrange columns
-ddr = ddr[['Pharmacy Name', 'Business Name', 'Street Address', 'City', 'State', 'Zip', 'Pharmacy License Number', 'DEA', 'Status', 'Days Delinquent', 
+ddr = ddr[['Business Name', 'Street Address', 'City', 'State', 'Zip', 'Pharmacy License Number', 'DEA', 'Status', 'Days Delinquent', 
     'Last Compliant', 'Date List Pulled', 'Primary Email', 'Primary Phone']]
 
 ddr.to_clipboard(index=False)
