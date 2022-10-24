@@ -70,6 +70,7 @@ def compliance():
 
     # sort by awarxe
     final_sheet.sort_values(['awarxe'], inplace=True)
+    final_sheet.drop_duplicates(inplace=True)
 
     # usage table
     usage = final_sheet[['Permit #', 'lookups in date range']].groupby('Permit #', as_index=False).sum()
