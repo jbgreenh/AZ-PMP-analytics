@@ -7,7 +7,7 @@ mp = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
 
 ddr = ddr[ddr['Days Delinquent'] >= 30]
 ddr = pd.merge(ddr, mp[['DEA', 'Pharmacy License Number']], on='DEA', how='left')
-ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'City', 'State', 'Zip']], 
+ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'City', 'State', 'Zip', 'Email', 'Phone']], 
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=True)
 
@@ -15,13 +15,18 @@ ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=
 ddr['Street Address'] = ddr['Street Address'].fillna(ddr['Pharmacy Address'])
 ddr['Business Name'] = ddr['Business Name'].fillna(ddr['Pharmacy Name'])
 
+ddr.rename(columns={'Primary Email': 'awarxe_email'}, inplace=True)
+ddr.rename(columns={'Email': 'igov_email'}, inplace=True)
+ddr.rename(columns={'Primary Phone': 'awarxe_phone'}, inplace=True)
+ddr.rename(columns={'Phone': 'igov_phone'}, inplace=True)
+
 # get today's date as a string
 today = date.today().strftime("%m-%d-%Y")
 ddr['Date List Pulled'] = today
 
 # rearrange columns
 ddr = ddr[['Business Name', 'Street Address', 'City', 'State', 'Zip', 'Pharmacy License Number', 'DEA', 'Status', 'Days Delinquent', 
-    'Last Compliant', 'Date List Pulled', 'Primary Email', 'Primary Phone']]
+    'Last Compliant', 'Date List Pulled', 'awarxe_email', 'igov_email', 'awarxe_phone', 'igov_phone']]
 
 ddr.to_clipboard(index=False)
 print('copied to clipboard')
