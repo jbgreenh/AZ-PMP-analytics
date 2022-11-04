@@ -2,12 +2,8 @@ import datetime
 import pandas as pd
 from utils.from_sftp import *
 
-def scorecard(ob=False):
-    # get previous month in YYYYMM format
-    today = datetime.datetime.now()
-    m_y = today.replace(day=1) - datetime.timedelta(days=1)
-    m_y = m_y.strftime('%Y%m')
-    
+def scorecard(m_y, ob=False):
+    '''takes a string of the form YYYYMM and returns a dataframe for the scorecard'''    
     if ob:
         print(f'getting {m_y} ob data')
         df_47 = from_sftp(f'/Monthly/REPORTAE_47/Dispensations/AZ_Dispensations_{m_y}_opioid_benzo.csv')
@@ -26,20 +22,28 @@ def scorecard(ob=False):
     n_lookups = df_merge[df_merge['totallookups'] > 0].shape[0]
     n_lookups_per = n_lookups/n
     n_lookups_per = n_lookups_per * 100
-    n_lookups_str = f'{round(n_lookups_per, 2)}%'
+    n_lookups_str = f'{round(n_lookups_per, 2)}'
     ob_str = 'ob_' if ob else ''
+    
     df_lookups = pd.DataFrame({f'{ob_str}n_prescribers': [n], f'{ob_str}n_lookups': [n_lookups], f'{ob_str}%': [n_lookups_str]})
     score_ob_str = 'percent of ob prescribers with a lookup:' if ob else 'percent of cs prescribers with a lookup:'
-    score_str = f'{score_ob_str} {n_lookups} / {n} = {n_lookups_str}'
+    score_str = f'{score_ob_str} {n_lookups} / {n} = {n_lookups_str}%'
     print(score_str)
     return df_lookups
 
 def main():
-    reg_scores = scorecard()
-    ob_scores = scorecard(ob=True)
+    # get last month
+    today = datetime.datetime.now()
+    last_month = today.replace(day=1) - datetime.timedelta(days=1)
+    m_y_str = last_month.strftime('%b-%y')
+    m_y = last_month.strftime('%Y%m')
+    # m_y = '202211'
+    # m_y_str = 'Nov-22'
+    reg_scores = scorecard(m_y)
+    ob_scores = scorecard(m_y, ob=True)
     
-    combined = pd.concat([reg_scores, ob_scores], axis=1)
-
+    date_col = pd.DataFrame({'date': [m_y_str]})
+    combined = pd.concat([date_col, reg_scores, ob_scores], axis=1)
     combined.to_clipboard(index=False, header=False)
     print('combined copied to clipboard')
 
