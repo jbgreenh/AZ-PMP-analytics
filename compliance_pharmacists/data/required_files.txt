@@ -1,4 +1,3 @@
-awarxe.xls
 igov_pharmacist.csv
 igov_pharmacy.csv
 inspection_list.csv

@@ -1,4 +1,5 @@
 import pandas as pd
+from utils.from_sftp import *
 
 def trim_string(astring, trailing):
     '''trim trailing characters from a string'''
@@ -8,13 +9,13 @@ def trim_string(astring, trailing):
     return astring
 
 def main():
-    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
-    awarxe = awarxe[~awarxe['DEA Number'].isnull()]
-    awarxe = awarxe[['Last Name', 'Professional License Number', 'DEA Number']]
-    awarxe['Last Name'] = awarxe['Last Name'].str.upper()
+    awarxe = awarxe_from_sftp()
+    awarxe = awarxe[~awarxe['dea number'].isnull()]
+    awarxe = awarxe[['last name', 'professional license number', 'dea number']]
+    awarxe['last name'] = awarxe['last name'].str.upper().str.strip()
 
     mm = pd.read_csv('data/mm_audit.csv', index_col=None)
-    mm['Physician Name'] = mm['Physician Name'].str.upper()
+    mm['Physician Name'] = mm['Physician Name'].str.upper().str.strip()
     mm['License Number'] = mm['License Number'].fillna('NONE')
 
     old = pd.read_excel('data/old_mm.xlsx', index_col=None)
@@ -23,8 +24,8 @@ def main():
     deg_for_trimming = [' DO', ' MD', ' PA', ' NP', ' ND']   # add degrees with a leading space to be trimmed as needed
 
     for deg in deg_for_trimming:
-        awarxe['Last Name'] = awarxe['Last Name'].apply(lambda x: trim_string(x, deg))
-        awarxe['Last Name'] = awarxe['Last Name'].apply(lambda x: trim_string(x, ','))
+        awarxe['last name'] = awarxe['last name'].apply(lambda x: trim_string(x, deg))
+        awarxe['last name'] = awarxe['last name'].apply(lambda x: trim_string(x, ','))
         mm['Physician Name'] = mm['Physician Name'].apply(lambda x: trim_string(x, deg))
         mm['Physician Name'] = mm['Physician Name'].apply(lambda x: trim_string(x, ','))
 
@@ -33,9 +34,9 @@ def main():
     mm_old_match = mm[~mm['DEA Number'].isnull()]
     mm_no_old_match = mm[mm['DEA Number'].isnull()].drop(columns=['DEA Number'])
 
-    awarxe['awarxe_code'] = awarxe['Last Name'].str[-3:] + awarxe['Professional License Number'].str[-4:]
+    awarxe['awarxe_code'] = awarxe['last name'].str[-3:] + awarxe['professional license number'].str[-4:]
     mm_no_old_match['mm_code'] = mm_no_old_match['Physician Name'].str[-3:] + mm_no_old_match['License Number'].str[-4:]
-    mm_no_old_match = mm_no_old_match.merge(awarxe[['awarxe_code', 'DEA Number']], 
+    mm_no_old_match = mm_no_old_match.merge(awarxe[['awarxe_code', 'dea number']], 
         left_on='mm_code', right_on='awarxe_code', how='left').drop(columns=['awarxe_code', 'mm_code'])
     mm_code_match = mm_no_old_match[~mm_no_old_match['DEA Number'].isnull()]
     mm_match_neither = mm_no_old_match[mm_no_old_match['DEA Number'].isnull()]

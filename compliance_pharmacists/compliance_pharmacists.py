@@ -4,7 +4,7 @@ import pandas as pd
 from utils.from_sftp import *
 
 def compliance():
-    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
+    awarxe = awarxe_from_sftp()
     inspection_list = pd.read_csv('data/inspection_list.csv', index_col=None)
     manage_pharmacies = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
     sched_2 = pd.read_csv('data/pharmacy_sched_2.csv', index_col=None)
@@ -31,13 +31,13 @@ def compliance():
 
     # license and DEA numbers to uppercase for matching
     final_sheet = inspection_list
-    final_sheet['License #'] = final_sheet['License #'].str.upper()
-    final_sheet['Permit #'] = final_sheet['Permit #'].str.upper()
-    pharmacies_igov['License/Permit #'] = pharmacies_igov['License/Permit #'].str.upper()
-    pharmacists_igov['License/Permit #'] = pharmacists_igov['License/Permit #'].str.upper()
-    manage_pharmacies['Pharmacy License Number'] = manage_pharmacies['Pharmacy License Number'].str.upper()
-    awarxe['Professional License Number'] = awarxe['Professional License Number'].str.upper()
-    lookups['prof_lic'] = lookups['prof_lic'].str.upper()
+    final_sheet['License #'] = final_sheet['License #'].str.upper().str.strip()
+    final_sheet['Permit #'] = final_sheet['Permit #'].str.upper().str.strip()
+    pharmacies_igov['License/Permit #'] = pharmacies_igov['License/Permit #'].str.upper().str.strip()
+    pharmacists_igov['License/Permit #'] = pharmacists_igov['License/Permit #'].str.upper().str.strip()
+    manage_pharmacies['Pharmacy License Number'] = manage_pharmacies['Pharmacy License Number'].str.upper().str.strip()
+    awarxe['professional license number'] = awarxe['professional license number'].str.upper().str.strip()
+    lookups['prof_lic'] = lookups['prof_lic'].str.upper().str.strip()
 
     # igov pharmacy: add business name and subtype
     final_sheet = pd.merge(inspection_list, pharmacies_igov[['License/Permit #', 'Business Name', 'SubType']], 
@@ -53,17 +53,17 @@ def compliance():
         left_on='License #', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 
     # awarxe: check registration and add review date
-    final_sheet = final_sheet.assign(awarxe=final_sheet['License #'].isin(awarxe['Professional License Number']))
+    final_sheet = final_sheet.assign(awarxe=final_sheet['License #'].isin(awarxe['professional license number']))
     final_sheet['awarxe'] = final_sheet['awarxe'].map({True:'YES' ,False:'NO'})
-    final_sheet = pd.merge(final_sheet, awarxe[['Professional License Number', 'Registration Review Date']],
-        left_on='License #', right_on='Professional License Number', how='left').drop(columns=['Professional License Number'])
+    final_sheet = pd.merge(final_sheet, awarxe[['professional license number', 'registration review date']],
+        left_on='License #', right_on='professional license number', how='left').drop(columns=['professional license number'])
 
     # add lookups
     final_sheet = pd.merge(final_sheet, lookups, left_on="License #", right_on='prof_lic', how='left').drop(columns=['prof_lic'])
     final_sheet.rename(columns={'totallookups':'lookups in date range'}, inplace=True)
 
     # rearrange columns
-    final_sheet = final_sheet[['awarxe', 'Registration Review Date', 'lookups in date range',
+    final_sheet = final_sheet[['awarxe', 'registration review date', 'lookups in date range',
         'SubType', 'Business Name', 'Permit #', 'License #', 'Last Insp',
         'Date Range', 'Notes', 'PharmacyDEA', 'First Name', 'Middle Name',
         'Last Name', 'Status', 'Phone', 'Email']]

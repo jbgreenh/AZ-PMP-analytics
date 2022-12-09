@@ -8,7 +8,7 @@ def signups():
     '''generate an excel file using the signups_template'''
     # read necessary tables
     deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
-    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
+    awarxe = awarxe_from_sftp()
     exclude_dvm = pd.read_csv('data/exclude_dvm.csv', index_col=None)
     city_county_lkup = pd.read_csv('data/lookup_city_county.csv', index_col=None)
     typo_city_lkup = pd.read_csv('data/lookup_mispelled_city.csv', index_col=None)
@@ -36,7 +36,7 @@ def signups():
     # output file path
     name_str = f'data/signups{cur_month}01{cur_year}.xlsx'
 
-    dispensations['state'] = dispensations['state'].str.upper()
+    dispensations['state'] = dispensations['state'].str.upper().str.strip()
 
     # create az_pro_info from dispensations and DEA list
     az_dispensations = dispensations[(dispensations['state'] == 'AZ') | (dispensations['state'] == 'ARIZONA')]
@@ -80,7 +80,7 @@ def signups():
     az_pro_info = az_pro_info[~az_pro_info['Name'].str.contains('CENTER|HOSPITAL|SCOTTSDALE|MEDICAL|REGIONAL')]
 
     # check registration in awarxe
-    az_pro_info = az_pro_info.assign(awarxe=az_pro_info['dea_number'].isin(awarxe['DEA Number']))
+    az_pro_info = az_pro_info.assign(awarxe=az_pro_info['dea_number'].isin(awarxe['dea number']))
     az_pro_info['awarxe'] = az_pro_info['awarxe'].map({True:'YES' ,False:'NO'})
     az_pro_info.drop_duplicates(subset="dea_number", keep='first', inplace=True)
 
@@ -97,10 +97,10 @@ def signups():
     totals = pd.merge(yeses, county_count, on='County', how='inner')
 
     # get delegate users in casa grande
-    awarxe_delegates = awarxe[awarxe['Role Title'].str.contains('Delegate') | awarxe['Role Title'].str.contains('Technician')]
-    awarxe_delegates = awarxe_delegates[awarxe_delegates['City'].str.upper() == 'CASA GRANDE']
-    awarxe_delegates_presc = awarxe_delegates[awarxe_delegates['Role Title'].str.contains('Presc')]
-    awarxe_delegates_pharm = awarxe_delegates[awarxe_delegates['Role Title'].str.contains('Pharm')]
+    awarxe_delegates = awarxe[awarxe['role title'].str.contains('Delegate') | awarxe['role title'].str.contains('Technician')]
+    awarxe_delegates = awarxe_delegates[awarxe_delegates['city'].str.upper() == 'CASA GRANDE']
+    awarxe_delegates_presc = awarxe_delegates[awarxe_delegates['role title'].str.contains('Presc')]
+    awarxe_delegates_pharm = awarxe_delegates[awarxe_delegates['role title'].str.contains('Pharm')]
     print(f'number of CG prescriber delegates: {len(awarxe_delegates_presc)}')
     print(f'number of CG pharmacist delegates: {len(awarxe_delegates_pharm)}')
 

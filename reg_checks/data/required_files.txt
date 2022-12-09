@@ -1,2 +1,1 @@
-awarxe.xls
 'target_file.xlsx' # this can be any xlsx file you are checking for registration

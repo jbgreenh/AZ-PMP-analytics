@@ -1,17 +1,16 @@
 import pandas as pd
+from utils.from_sftp import *
 from utils.sheet_formatting import *
 
 def check_reg(input_fp, output_fp, dea_col_name):
-    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
+    awarxe = awarxe_from_sftp()
     input = pd.read_excel(input_fp, index_col=None)
 
-    # input DEA number to upper case
-    input[dea_col_name] = input[dea_col_name].str.upper()
-    input[dea_col_name] = input[dea_col_name].str.strip()
-    awarxe['DEA Number'] = awarxe['DEA Number'].str.upper()
-    awarxe['DEA Number'] = awarxe['DEA Number'].str.strip()
+    # input and awarxe DEA numbers to upper case
+    input[dea_col_name] = input[dea_col_name].str.upper().str.strip()
+    awarxe['dea number'] = awarxe['dea number'].str.upper().str.strip()
     
-    output = input.assign(awarxe=input[dea_col_name].isin(awarxe['DEA Number']))
+    output = input.assign(awarxe=input[dea_col_name].isin(awarxe['dea number']))
     output['awarxe'] = output['awarxe'].map({True:'YES' ,False:'NO'})
 
     writer = pd.ExcelWriter(output_fp)

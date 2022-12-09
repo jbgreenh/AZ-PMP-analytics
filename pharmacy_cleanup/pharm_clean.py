@@ -6,12 +6,12 @@ igov = pd.read_csv('data/igov_pharmacy.csv', index_col=None)
 mp = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
 
 ddr = ddr[ddr['Days Delinquent'] >= 30]
-ddr['DEA'] = ddr['DEA'].str.upper()
-mp['DEA'] = mp['DEA'].str.upper()
+ddr['DEA'] = ddr['DEA'].str.upper().str.strip()
+mp['DEA'] = mp['DEA'].str.upper().str.strip()
 
 ddr = pd.merge(ddr, mp[['DEA', 'Pharmacy License Number']], on='DEA', how='left')
-ddr['Pharmacy License Number'] = ddr['Pharmacy License Number'].str.upper()
-igov['License/Permit #'] = igov['License/Permit #'].str.upper()
+ddr['Pharmacy License Number'] = ddr['Pharmacy License Number'].str.upper().str.strip()
+igov['License/Permit #'] = igov['License/Permit #'].str.upper().str.strip()
 ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'City', 'State', 'Zip', 'Email', 'Phone']], 
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=True)

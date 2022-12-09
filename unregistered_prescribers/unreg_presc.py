@@ -1,13 +1,16 @@
 import pandas as pd
+from utils.from_sftp import *
 from utils.sheet_formatting import *
 
-def Main():
-    awarxe = pd.read_excel('data/awarxe.xls', skiprows=1, index_col=None)
+def main():
+    awarxe = awarxe_from_sftp()
     boards = pd.read_csv('data/boards.csv', index_col=None)
     exclude_degs = pd.read_csv('data/exclude_degs.csv', index_col=None)
     az_presc_deas = pd.read_csv('data/az_prescriber_deas.csv', index_col=None)
 
-    az_presc_q = az_presc_deas.assign(awarxe=az_presc_deas['DEA Number'].isin(awarxe['DEA Number']))
+    az_presc_deas['DEA Number'] = az_presc_deas['DEA Number'].str.upper().str.strip()
+    awarxe['dea number'] = awarxe['dea number'].str.upper().str.strip()
+    az_presc_q = az_presc_deas.assign(awarxe=az_presc_deas['DEA Number'].isin(awarxe['dea number']))
     az_presc_q['awarxe'] = az_presc_q['awarxe'].map({True:'YES' ,False:'NO'})
     az_presc_q = az_presc_q[az_presc_q['awarxe'] == 'NO']
 
@@ -65,4 +68,4 @@ def Main():
     print('board counts copied to clipboard')
 
 if __name__ == '__main__':
-    Main()
+    main()

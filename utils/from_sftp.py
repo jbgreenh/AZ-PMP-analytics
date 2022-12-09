@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 import paramiko
 import json
 
@@ -27,3 +28,12 @@ def from_sftp(remote_tail: str) -> pd.DataFrame:
     client.close()
 
     return df
+
+def awarxe_from_sftp():
+    '''get yesterday's date and return the most recent awarxe file'''
+    yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+    yesterday_year = yesterday.strftime('%Y')
+    yesterday = yesterday.strftime('%Y%m%d')
+    
+    tail = f'/Daily/Userex/{yesterday_year}/AZ_UserEx_{yesterday}.csv'
+    return from_sftp(tail)
