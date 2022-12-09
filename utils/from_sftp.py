@@ -35,5 +35,6 @@ def awarxe_from_sftp():
     yesterday_year = yesterday.strftime('%Y')
     yesterday = yesterday.strftime('%Y%m%d')
     
+    print(f'pulling awarxe file for {yesterday}')
     tail = f'/Daily/Userex/{yesterday_year}/AZ_UserEx_{yesterday}.csv'
     return from_sftp(tail)
