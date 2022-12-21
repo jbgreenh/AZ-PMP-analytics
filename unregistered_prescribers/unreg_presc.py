@@ -61,7 +61,7 @@ def main():
         d.drop(columns=['board']).style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name=n, engine='xlsxwriter')
         set_col_widths(writer, d, n)
 
-    writer.save()
+    writer.close()
     print('data/unregistered_prescribers.xlsx saved')
 
     board_counts.to_clipboard(index=False)

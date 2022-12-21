@@ -39,7 +39,7 @@ def mm(output_fp):
 
     set_col_widths(writer, mm_combined, 'mm audit')
 
-    writer.save()
+    writer.close()
     print(f'{output_fp} saved')
 
 def main():

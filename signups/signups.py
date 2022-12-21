@@ -119,12 +119,10 @@ def signups():
 
     template_wb.save(name_str)
 
-    book = load_workbook(name_str)
-    writer = pd.ExcelWriter(name_str, engine='openpyxl')
-    writer.book = book
+    writer = pd.ExcelWriter(name_str, engine='openpyxl', mode='a')
     az_pro_info.style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name='County Lists', engine='openpyxl')
     set_col_widths_openpyxl(writer, az_pro_info, 'County Lists')
-    writer.save()
+    writer.close()
 
 def main():
     print('starting signups')

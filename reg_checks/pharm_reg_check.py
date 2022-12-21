@@ -19,7 +19,7 @@ def check_reg(input_fp, output_fp, lino_col_name):
 
     set_col_widths(writer, output, 'registration')
 
-    writer.save()
+    writer.close()
     print(f'{output_fp} saved')
 
 def main():
