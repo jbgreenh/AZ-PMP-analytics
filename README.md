@@ -1,7 +1,7 @@
 # AZ-PMP-analytics
   
 ### setup
-using python 3.10 (you may need to add --user to the end of the first command)  
+using python 3.10+ (you may need to add --user to the end of the first command)  
 ```
 pip install .
 pip install -r requirements.txt
