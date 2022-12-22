@@ -3,13 +3,13 @@
 ### setup
 using python 3.10 (you may need to add --user to the end of the first command)  
 ```
-python setup.py install
+pip install .
 pip install -r requirements.txt
 ```
 if you ever need to update all required packages:    
 ```
 pip uninstall utils
-python setup.py install
+pip install .
 pip install -r requirements.txt
 ```
 
