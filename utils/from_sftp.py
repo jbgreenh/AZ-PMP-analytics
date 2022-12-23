@@ -29,11 +29,15 @@ def from_sftp(remote_tail: str) -> pd.DataFrame:
 
     return df
 
-def awarxe_from_sftp():
+def awarxe_from_sftp(day=None):
     '''get yesterday's date and return the most recent awarxe file'''
-    yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
-    yesterday_year = yesterday.strftime('%Y')
-    yesterday = yesterday.strftime('%Y%m%d')
+    if day == None:
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        yesterday_year = yesterday.strftime('%Y')
+        yesterday = yesterday.strftime('%Y%m%d')
+    else:
+        yesterday = day
+        yesterday_year = day[0:4]
     
     print(f'pulling awarxe file for {yesterday}')
     tail = f'/Daily/Userex/{yesterday_year}/AZ_UserEx_{yesterday}.csv'
