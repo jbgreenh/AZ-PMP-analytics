@@ -14,7 +14,7 @@ ddr['Pharmacy License Number'] = ddr['Pharmacy License Number'].str.upper().str.
 igov['License/Permit #'] = igov['License/Permit #'].str.upper().str.strip()
 ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'City', 'State', 'Zip', 'Email', 'Phone']], 
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
-ddr.sort_values(['Status', 'Pharmacy License Number'], ascending=False, inplace=True)
+ddr.sort_values(['Status', 'Pharmacy License Number', 'Days Delinquent'], ascending=False, inplace=True)
 
 # favor info from igov over manage pharmacies
 ddr['Street Address'] = ddr['Street Address'].fillna(ddr['Pharmacy Address'])
