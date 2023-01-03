@@ -6,3 +6,4 @@ Jinja2
 openpyxl
 pyperclip
 paramiko
+nbconvert
