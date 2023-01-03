@@ -11,7 +11,9 @@ if you ever need to update all required packages:
 pip uninstall utils
 pip install .
 pip install -r requirements.txt
-```
+```  
+for uploading .ipynb files without their output:  
+https://gist.github.com/33eyes/431e3d432f73371509d176d0dfb95b6e
 
 ### usage
 add (or update) the required files from `required_files.txt` to the data folder of the script you wish to run  
