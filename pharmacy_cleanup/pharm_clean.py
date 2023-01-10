@@ -17,7 +17,7 @@ ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 ddr.sort_values(['Status', 'Pharmacy License Number', 'Days Delinquent'], ascending=False, inplace=True)
 
-# favor info from igov over manage pharmacies
+# favor info from igov over manage pharmacies and add apt/suite # if available
 ddr['Street Address'] = np.where(ddr['Apt/Suite #'].isna(), ddr['Street Address'], 
     ddr['Street Address'].str.cat(ddr['Apt/Suite #'].astype(str), sep=', '))
 ddr['Street Address'] = ddr['Street Address'].fillna(ddr['Pharmacy Address'])
