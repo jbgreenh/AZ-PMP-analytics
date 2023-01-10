@@ -39,7 +39,7 @@ generate a filtered version of the dea file
 generate a list for each board of their prescribers who are unregistered in awarxe  
 
 ### clearinghouse_check
-check ``az_pharmacy_deas`` for any pharmacies not in the ``clearinghouse``  
+check ``az_pharmacy_deas`` for any pharmacies not in the clearinghouse  
 
 ### medical_marijuana
 check medical marijuana list for registration and usage  
