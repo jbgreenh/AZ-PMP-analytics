@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from datetime import date
 
 ddr = pd.read_csv('data/delinquent_dispenser_request.csv', index_col=None)
@@ -12,11 +13,13 @@ mp['DEA'] = mp['DEA'].str.upper().str.strip()
 ddr = pd.merge(ddr, mp[['DEA', 'Pharmacy License Number']], on='DEA', how='left')
 ddr['Pharmacy License Number'] = ddr['Pharmacy License Number'].str.upper().str.strip()
 igov['License/Permit #'] = igov['License/Permit #'].str.upper().str.strip()
-ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'City', 'State', 'Zip', 'Email', 'Phone']], 
+ddr = pd.merge(ddr, igov[['License/Permit #', 'Status', 'Business Name', 'Street Address', 'Apt/Suite #', 'City', 'State', 'Zip', 'Email', 'Phone']], 
     left_on='Pharmacy License Number', right_on='License/Permit #', how='left').drop(columns=['License/Permit #'])
 ddr.sort_values(['Status', 'Pharmacy License Number', 'Days Delinquent'], ascending=False, inplace=True)
 
 # favor info from igov over manage pharmacies
+ddr['Street Address'] = np.where(ddr['Apt/Suite #'].isna(), ddr['Street Address'], 
+    ddr['Street Address'].str.cat(ddr['Apt/Suite #'].astype(str), sep=', '))
 ddr['Street Address'] = ddr['Street Address'].fillna(ddr['Pharmacy Address'])
 ddr['Business Name'] = ddr['Business Name'].fillna(ddr['Pharmacy Name'])
 
