@@ -13,25 +13,35 @@ def az_deas(p):
         
     print('trying to read deas')
     deas = pd.read_fwf('data/cs_active.txt', widths=dea_widths, names=dea_names, encoding='latin-1')
-    deas = deas[deas['State'] == 'AZ']
+    deas_az = deas[deas['State'] == 'AZ']
 
     if p == 'pharm':
-        deas = deas[(deas['Business Activity Code'] == 'A')]
-        print(deas.head())
-        deas.to_csv('data/az_pharmacy_deas.csv', index=False)
+        deas_az = deas_az[(deas_az['Business Activity Code'] == 'A')]
+        print(deas_az.head())
+        deas_az.to_csv('data/az_pharmacy_deas.csv', index=False)
         print('updated data/az_pharmacy_deas.csv')
     elif p == 'presc':
-        deas = deas[(deas['Business Activity Code'] == 'C') | (deas['Business Activity Code'] == 'M')]
-        print(deas.head())
-        deas.to_csv('data/az_prescriber_deas.csv', index=False)
+        deas_az = deas_az[(deas_az['Business Activity Code'] == 'C') | (deas_az['Business Activity Code'] == 'M')]
+        print(deas_az.head())
+        deas_az.to_csv('data/az_prescriber_deas.csv', index=False)
         print('updated data/az_prescriber_deas.csv')
+    elif p == 'az':
+        print(deas_az.head())
+        deas_az.to_csv('data/az_deas.csv', index=False)
+        print('updated data/az_deas.csv')
+    elif p == 'all':
+        print(deas.head())
+        deas.to_csv('data/deas.csv', index=False)
+        print('updated data/deas.csv')
 
 def main():
     # command line
-    if len(sys.argv) != 2 or (sys.argv[1] not in ['pharm', 'presc']):
+    if len(sys.argv) != 2 or (sys.argv[1] not in ['pharm', 'presc', 'az', 'all']):
         print('please follow one of the below formats')
         print('python az_deas.py presc')
         print('python az_deas.py pharm')
+        print('python az_deas.py az')
+        print('python az_deas.py all')
     else:
         az_deas(sys.argv[1])
 
