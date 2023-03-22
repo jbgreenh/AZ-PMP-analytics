@@ -38,10 +38,10 @@ def main():
     # command line
     if len(sys.argv) != 2 or (sys.argv[1] not in ['pharm', 'presc', 'az', 'all']):
         print('please follow one of the below formats')
-        print('python az_deas.py presc')
-        print('python az_deas.py pharm')
-        print('python az_deas.py az')
-        print('python az_deas.py all')
+        print('python deas.py presc')
+        print('python deas.py pharm')
+        print('python deas.py az')
+        print('python deas.py all')
     else:
         az_deas(sys.argv[1])
 
