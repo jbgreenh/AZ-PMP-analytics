@@ -19,7 +19,7 @@ def main():
     mm['License Number'] = mm['License Number'].fillna('NONE')
 
     old = pd.read_excel('data/old_mm.xlsx', index_col=None)
-    old = old[['Physician ID', 'DEA Number']]
+    old = old[['Physician Id', 'DEA Number']]
 
     deg_for_trimming = [' DO', ' MD', ' PA', ' NP', ' ND']   # add degrees with a leading space to be trimmed as needed
 
@@ -30,7 +30,7 @@ def main():
         mm['Physician Name'] = mm['Physician Name'].apply(lambda x: trim_string(x, ','))
 
     # check the old file for matches on physician id
-    mm = mm.merge(old[['Physician ID', 'DEA Number']], left_on='Physician Id', right_on='Physician ID', how='left').drop(columns=['Physician ID'])
+    mm = mm.merge(old, on='Physician Id', how='left')
     mm_old_match = mm[~mm['DEA Number'].isnull()]
     mm_no_old_match = mm[mm['DEA Number'].isnull()].drop(columns=['DEA Number'])
 
@@ -38,18 +38,22 @@ def main():
     mm_no_old_match['mm_code'] = mm_no_old_match['Physician Name'].str[-3:] + mm_no_old_match['License Number'].str[-4:]
     mm_no_old_match = mm_no_old_match.merge(awarxe[['awarxe_code', 'dea number']], 
         left_on='mm_code', right_on='awarxe_code', how='left').drop(columns=['awarxe_code', 'mm_code'])
-    mm_code_match = mm_no_old_match[~mm_no_old_match['DEA Number'].isnull()]
-    mm_match_neither = mm_no_old_match[mm_no_old_match['DEA Number'].isnull()]
+    mm_code_match = mm_no_old_match[~mm_no_old_match['dea number'].isnull()]
+    mm_match_neither = mm_no_old_match[mm_no_old_match['dea number'].isnull()]
     mm_match_neither = mm_match_neither.sort_values(by='Application Count', ascending=False)
     mm_match_neither['note'] = ''
+
+    # rename DEA columns
+    mm_code_match = mm_code_match.rename(columns={'dea number':'DEA Number'})
+    mm_match_neither = mm_match_neither.rename(columns={'dea number':'DEA Number'})
 
     mm_matches_combined = pd.concat([mm_old_match, mm_code_match])
 
     mm_matches_combined.to_csv('data/mm_matches_combined.csv', index=False)
-    mm_match_neither.to_clipboard(index=False)
+    mm_match_neither.to_csv('data/mm_manual.csv', index=False)
     print('generated data/mm_matches_combined.csv')
-    print('copied mm_match_neither to clipboard')
-    print('please manually check all prescribers in mm_match_neither \nwith 20+ application count for DEA numbers')
+    print('generated data/mm_manual.csv')
+    print('please manually check all prescribers in mm_manual \nwith 20+ application count for DEA numbers')
     print('and save to data/mm_manual.csv, then run mm2.py')
 
 if __name__ == '__main__':
