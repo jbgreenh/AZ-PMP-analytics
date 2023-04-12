@@ -28,6 +28,10 @@ ddr.rename(columns={'Email': 'igov_email'}, inplace=True)
 ddr.rename(columns={'Primary Phone': 'awarxe_phone'}, inplace=True)
 ddr.rename(columns={'Phone': 'igov_phone'}, inplace=True)
 
+# convert last compliant date
+ddr['Last Compliant'] = pd.to_datetime(ddr['Last Compliant'])
+ddr['Last Compliant'] = ddr['Last Compliant'].dt.strftime('%m/%d/%Y')
+
 # get today's date as a string
 today = date.today().strftime("%m-%d-%Y")
 ddr['Date List Pulled'] = today
