@@ -22,7 +22,7 @@ def from_sftp(remote_tail: str, sep: str='|') -> pd.DataFrame:
     sftp = client.open_sftp()
     remote_file = sftp.open(remote_path)
     remote_file.prefetch()
-    df = pd.read_csv(remote_file, index_col=None, sep=sep)
+    df = pd.read_csv(remote_file, index_col=None, sep=sep, low_memory=False)
     remote_file.close()
     sftp.close()
     client.close()
