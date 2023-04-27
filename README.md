@@ -53,7 +53,7 @@ find sum of naloxone doses dispensed and generate email body
 generate the monthly scorecard for % of prescriber PMP usage  
 
 ### exclude_ndcs  
-generate and update lists of opiate agonist ndcs to exclude from awarxe reports  
+generate and update lists of opiate antagonist ndcs to exclude from awarxe reports  
 
 ### temp
 miscellaneous scripts for adhoc reporting  
