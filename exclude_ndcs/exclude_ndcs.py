@@ -10,6 +10,7 @@ new_ndcs = new_ndcs.drop(columns=['_merge', 'drug'])
 new_ndcs = new_ndcs.rename(columns={'Generic Name':'drug'})
 new_ndcs.to_clipboard(index=False)
 print('new_ndcs copied to clipboard, please input exclusion list in awarxe')
+print(new_ndcs)
 
 # update the list
 new_file = pd.concat([excluded_ndcs, new_ndcs], axis=0, ignore_index=True)
