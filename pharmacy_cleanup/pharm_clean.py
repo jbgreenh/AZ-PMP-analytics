@@ -6,7 +6,7 @@ ddr = pd.read_csv('data/delinquent_dispenser_request.csv', index_col=None)
 igov = pd.read_csv('data/igov_pharmacy.csv', index_col=None)
 mp = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
 
-ddr = ddr.query('`Days Delinquent` >= 30 or `Days Delinquent`.isna()')  # update to 21 after 6/2
+ddr = ddr.query('`Days Delinquent` >= 21 or `Days Delinquent`.isna()')  # update to 21 after 6/2
 ddr['DEA'] = ddr['DEA'].str.upper().str.strip()
 mp['DEA'] = mp['DEA'].str.upper().str.strip()
 
