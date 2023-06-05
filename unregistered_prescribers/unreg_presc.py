@@ -54,18 +54,18 @@ def main():
     podiatry = az_presc_q[az_presc_q['board'] == 'Podiatry']
 
     writer = pd.ExcelWriter('data/unregistered_prescribers.xlsx')
-    tabs = {'Dental':dental, 'Medical':medical, 'Naturopathic':naturopath, 'Nursing':nursing, 'Optometry':optometry, 
+    tabs = {'Counts':board_counts, 'Dental':dental, 'Medical':medical, 'Naturopathic':naturopath, 'Nursing':nursing, 'Optometry':optometry, 
         'Osteopathic':osteopathic, 'Physician Assistants':physician_assistants, 'Podiatry':podiatry}
 
     for n, d in tabs.items():
-        d.drop(columns=['board']).style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name=n, engine='xlsxwriter')
+        if n == 'Counts':
+            d.to_excel(writer, index=False, sheet_name=n, engine='xlsxwriter')
+        else:
+            d.drop(columns=['board']).style.applymap(highlight_cells).to_excel(writer, index=False, sheet_name=n, engine='xlsxwriter')
         set_col_widths(writer, d, n)
 
     writer.close()
     print('data/unregistered_prescribers.xlsx saved')
-
-    board_counts.to_clipboard(index=False)
-    print('board counts copied to clipboard')
 
 if __name__ == '__main__':
     main()
