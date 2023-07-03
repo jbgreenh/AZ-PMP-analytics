@@ -1,9 +1,9 @@
 import pandas as pd
 
-deas = pd.read_csv('data/az_pharmacy_deas.csv', index_col=None)
+deas = pd.read_csv('data/az_pharmacy_deas.csv', index_col=None, low_memory=False)
 manage_pharmacies = pd.read_csv('data/manage_pharmacies.csv', index_col=None)
 igov = pd.read_csv('data/igov_pharmacy.csv', index_col=None)
-submits = pd.read_csv('data/submits.csv', sep='\t', encoding='utf-16',index_col=None)
+submits = pd.read_csv('data/submits.csv', sep='\t', encoding='utf-16', index_col=None, low_memory=False)
 
 # check for pharmacists in deas but not in manage_pharmacies
 deas_not_in_mp = deas[~deas['DEA Number'].isin(manage_pharmacies['DEA'])]
