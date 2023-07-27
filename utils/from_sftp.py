@@ -17,7 +17,7 @@ def from_sftp(remote_tail: str, sep: str='|') -> pd.DataFrame:
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(host, username=username, password=password, port=port)
+    client.connect(host, username=username, password=password, port=port, banner_timeout=200)
 
     sftp = client.open_sftp()
     remote_file = sftp.open(remote_path)
