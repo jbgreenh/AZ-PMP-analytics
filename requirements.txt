@@ -1,9 +1,10 @@
 utils==0.0.0
-pandas
-xlrd >= 1.0.0
-XlsxWriter
-Jinja2
-openpyxl
-pyperclip
-paramiko
-nbconvert
+numpy==1.26.0
+openpyxl==3.1.2
+XlsxWriter==3.1.5
+pandas==2.1.1
+paramiko==3.3.1
+polars[all]==0.19.5
+pyperclip==1.8.2
+jupyter==1.0.0
+nbconvert==7.8.0
